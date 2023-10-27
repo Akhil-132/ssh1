@@ -1,0 +1,4 @@
+django
+django-embed-video
+pillow
+mysqlclient==2.2.0
