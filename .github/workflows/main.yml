@@ -22,5 +22,7 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > alma.pem
         ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 
-        ls
+        git init
+        git pull origin master https://github.com/Akhil-132/ssh1.git
+        cd ssh1
         
