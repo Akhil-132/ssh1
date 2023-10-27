@@ -21,4 +21,6 @@ jobs:
     - name: Deploy to EC2
       run: |
         echo "$SSH_PRIVATE_KEY" > alma.pem
-        ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 'cd /root/ &&  git pull origin master'
+        ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 
+        ls
+        
