@@ -20,4 +20,5 @@ jobs:
 
     - name: Deploy to EC2
       run: |
+        cat ${{ secrets.SSH_PRIVATE_KEY }}
         ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@52.71.33.91
