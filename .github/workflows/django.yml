@@ -34,4 +34,4 @@ jobs:
       - name: Deploy to EC2
         run: |
           echo "$SSH_PRIVATE_KEY" > alma.pem
-          ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 "cd /opt/ && sudo git pull origin master && sudo python manage.py makemigrations && sudo python manage.py migtrate "
+          ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 "cd /opt/ && sudo git pull origin master && sudo python3 manage.py makemigrations && sudo python3 manage.py migtrate "
