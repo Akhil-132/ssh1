@@ -1,0 +1,42 @@
+name: Django CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set up MySQL database
+        run: |
+          # Install MySQL server
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+
+          # Secure the installation (optional, for production use)
+          # sudo mysql_secure_installation
+
+          # Create a new MySQL database and user
+          mysql -u root -e "CREATE DATABASE akhil;"
+          mysql -u root -e "CREATE USER 'akhil'@'localhost' IDENTIFIED BY 'qwerty';"
+          mysql -u root -e "GRANT ALL PRIVILEGES ON akhil.* TO 'akhil'@'localhost';"
+          mysql -u root -e "FLUSH PRIVILEGES;"
+  
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          echo "$SSH_PRIVATE_KEY" > alma.pem
+          ssh -o StrictHostKeyChecking=no -i alma.pem ubuntu@52.71.33.91 "cd /opt/ && git pull && python manage.py migrate && python manage.py collectstatic --noinput"
